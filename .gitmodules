@@ -1,3 +1,6 @@
 [submodule "writeup-workflow"]
 	path = writeup-workflow
 	url = https://github.com/Sage-Bionetworks-Challenges/writeup-workflow
+[submodule "midi-validation-submodule"]
+	path = midi-validation-submodule
+	url = https://github.com/CBIIT/MIDI_validation_script.git
