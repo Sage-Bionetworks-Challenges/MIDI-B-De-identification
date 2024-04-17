@@ -1,39 +1,58 @@
 #!/usr/bin/env cwl-runner
 
+# INPUTS:
+#   submission_id: Submission ID
+#   synapse_config: filepath to .synapseConfig file
+#   admin_folder_id: Synapse Folder ID accessible by an admin
+#   submitter_folder_id: Synapse Folder ID accessible by the submitter
+#   workflow_id: Synapse File ID that links to the workflow archive
+
 cwlVersion: v1.0
 class: Workflow
-label: <YOUR CHALLENGE> Evaluation
+
+label: workflow to accept challenge writeups
 doc: >
-  BRIEF DESCRIPTION ABOUT THE CHALLENGE, e.g.
-  This workflow will run and evaluate Docker submissions to the
-  Awesome Challenge (syn123). Metrics returned are x, y, z.
+  This workflow will validate a participant's writeup, checking for:
+    - Submission is a Synapse project
+    - Submission is not the challenge site (which is a Synapse project)
+    - Submission is accessible to the admin team
+  Archive (create a project copy) if the submission is valid.
 
 requirements:
   - class: StepInputExpressionRequirement
 
 inputs:
-  submissionId:
-    label: Submission ID
-    type: int
-  submitterUploadSynId:
-    label: Synapse Folder ID accessible by the submitter
+  - adminUploadSynId:
+    label: Synapse Folder ID accessible by an admin
     type: string
-  synapseConfig:
-    label: filepath to .synapseConfig file
+  - id: submissionId
+    type: int
+  - id: synapseConfig
     type: File
+  - id: adminUploadSynId
+    type: string
+  - id: submitterUploadSynId
+    type: string
+  - id: workflowSynapseId
+    type: string
+  - id: admin
+    label: User or team ID for challenge admin
+    type: string
+    default: "3487816"  # TODO: enter admin username (they will become the archive owner)
 
 outputs: {}
 
 steps:
-
-  set_submitter_folder_permissions:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.1/cwl/set_permissions.cwl
+  admin_log_access:
+    doc: >
+      Give challenge admin `download` permissions to the submission logs
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/set_permissions.cwl
     in:
       - id: entityid
         source: "#submitterUploadSynId"
-      # TODO: replace `valueFrom` with the admin user ID or admin team ID
       - id: principalid
-        valueFrom: "3487816"
+        source: "#admin"
       - id: permissions
         valueFrom: "download"
       - id: synapse_config
@@ -41,7 +60,9 @@ steps:
     out: []
 
   download_submission:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.1/cwl/get_submission.cwl
+    doc: Download submission
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/get_submission.cwl
     in:
       - id: submissionid
         source: "#submissionId"
@@ -49,37 +70,42 @@ steps:
         source: "#synapseConfig"
     out:
       - id: filepath
-      - id: docker_repository
-      - id: docker_digest
       - id: entity_id
       - id: entity_type
+      - id: evaluation_id
       - id: results
       
-  download_goldstandard:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/cwl-tool-synapseclient/v1.4/cwl/synapse-get-tool.cwl
+  create_config_file:
+    run: /bin/bash
+    label: "Create config.json"
     in:
-      # TODO: replace `valueFrom` with the Synapse ID to the challenge goldstandard
-      - id: synapseid
-        valueFrom: "syn54936727"
-      - id: synapse_config
-        source: "#synapseConfig"
-    out:
-      - id: filepath
+      - id: submitter_folder_id
+        source: "#submitter_folder_id"
+      - id: submissionId
+        source: "#submissionId"
+    out: [config_file]
 
   validate:
-    run: steps/validate.cwl
+    run: validate.cwl
     in:
-      - id: input_file
-        source: "#download_submission/filepath"
-      - id: entity_type
-        source: "#download_submission/entity_type"
+      - id: synapse_config
+        source: "#synapseConfig"
+      - id: submissionid
+        source: "#submissionId"
+      - id: challengewiki
+        valueFrom: "syn53065762"  # TODO: update to the Challenge's staging synID
+    # UNCOMMENT THE FOLLOWING IF NEEDED
+    #   - id: public
+    #     default: true
+    #   - id: admin
+    #     source: "#admin"
     out:
       - id: results
       - id: status
       - id: invalid_reasons
   
-  email_validation:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.1/cwl/validate_email.cwl
+  validation_email:
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/validate_email.cwl
     in:
       - id: submissionid
         source: "#submissionId"
@@ -89,13 +115,13 @@ steps:
         source: "#validate/status"
       - id: invalid_reasons
         source: "#validate/invalid_reasons"
-      # OPTIONAL: set `default` to `false` if email notification about valid submission is needed
-      - id: errors_only
-        default: true
+      # UNCOMMENT IF EMAIL SHOULD ONLY BE SENT FOR ERRORS
+      # - id: errors_only
+      #   default: true
     out: [finished]
 
   annotate_validation_with_output:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.1/cwl/annotate_submission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/annotate_submission.cwl
     in:
       - id: submissionid
         source: "#submissionId"
@@ -110,49 +136,37 @@ steps:
     out: [finished]
 
   check_status:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.1/cwl/check_status.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/check_status.cwl
     in:
       - id: status
         source: "#validate/status"
       - id: previous_annotation_finished
         source: "#annotate_validation_with_output/finished"
       - id: previous_email_finished
-        source: "#email_validation/finished"
+        source: "#validation_email/finished"
     out: [finished]
-
-  score:
-    run: steps/score.cwl
+ 
+  archive:
+    run: archive.cwl
     in:
-      - id: input_file
-        source: "#download_submission/filepath"
-      - id: goldstandard
-        source: "#download_goldstandard/filepath"
+      - id: synapse_config
+        source: "#synapseConfig"
+      - id: submissionid
+        source: "#submissionId"
+      - id: admin
+        source: "#admin"
       - id: check_validation_finished 
         source: "#check_status/finished"
     out:
       - id: results
-      
-  email_score:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.1/cwl/score_email.cwl
-    in:
-      - id: submissionid
-        source: "#submissionId"
-      - id: synapse_config
-        source: "#synapseConfig"
-      - id: results
-        source: "#score/results"
-      # OPTIONAL: add annotations to be withheld from participants to `[]`
-      # - id: private_annotations
-      #   default: []
-    out: []
 
-  annotate_submission_with_output:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.1/cwl/annotate_submission.cwl
+  annotate_archive_with_output:
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/annotate_submission.cwl
     in:
       - id: submissionid
         source: "#submissionId"
       - id: annotation_values
-        source: "#score/results"
+        source: "#archive/results"
       - id: to_public
         default: true
       - id: force
@@ -162,4 +176,3 @@ steps:
       - id: previous_annotation_finished
         source: "#annotate_validation_with_output/finished"
     out: [finished]
- 
