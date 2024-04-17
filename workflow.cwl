@@ -82,8 +82,8 @@ steps:
     run: /bin/bash
     label: "Create config.json"
     in:
-      - id: submitter_folder_id
-        source: "#submitter_folder_id"
+      - id: submitterUploadSynId
+        source: "#submitterUploadSynId"
       - id: submissionId
         source: "#submissionId"
     out: [config_file]
