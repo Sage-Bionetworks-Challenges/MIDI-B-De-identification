@@ -10,12 +10,13 @@
 cwlVersion: v1.0
 class: Workflow
 
-label: workflow to accept challenge writeups
+label: MIDI-B De-identification - Task 1 workflow
 doc: >
-  This workflow will validate a participant's writeup, checking for:
+  This workflow will validate a participant's de-identified images, checking for:
     - Submission is a Synapse project
     - Submission is not the challenge site (which is a Synapse project)
     - Submission is accessible to the admin team
+    - Submission specific config.json is generated
   Archive (create a project copy) if the submission is valid.
 
 requirements:
@@ -26,21 +27,23 @@ inputs:
     label: Synapse Folder ID accessible by an admin
     type: string
   - id: submissionId
+    label: Submission ID
     type: int
   - id: synapseConfig
+    label: filepath to .synapseConfig file
     type: File
-  - id: adminUploadSynId
-    type: string
   - id: submitterUploadSynId
+    label: Synapse Folder ID accessible by the submitter
     type: string
   - id: workflowSynapseId
+    label: Synapse File ID that links to the workflow
     type: string
   - id: admin
     label: User or team ID for challenge admin
     type: string
     default: "3487816"  # TODO: enter admin username (they will become the archive owner)
 
-outputs: {}
+outputs: []
 
 steps:
   admin_log_access:
