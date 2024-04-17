@@ -15,7 +15,7 @@ doc: >
   This workflow will validate a participant's de-identified images, checking for:
     - Submission is a Synapse project
     - Submission is not the challenge site (which is a Synapse project)
-    - Submission is accessible to the admin team
+    - Submission is accessible to the organizers team
     - Submission specific config.json is generated
   Archive (create a project copy) if the submission is valid.
 
@@ -38,24 +38,24 @@ inputs:
   - id: workflowSynapseId
     label: Synapse File ID that links to the workflow
     type: string
-  - id: admin
-    label: User or team ID for challenge admin
+  - id: organizers
+    label: User or team ID for challenge organizers
     type: string
-    default: "3487816"  # TODO: enter admin username (they will become the archive owner)
+    default: "3487816"  # TODO: enter organizers username (they will become the archive owner)
 
 outputs: []
 
 steps:
-  admin_log_access:
+  organizers_log_access:
     doc: >
-      Give challenge admin `download` permissions to the submission logs
+      Give challenge organizers `download` permissions to the submission logs
     run: |-
       https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/set_permissions.cwl
     in:
       - id: entityid
         source: "#submitterUploadSynId"
       - id: principalid
-        source: "#admin"
+        source: "#organizers"
       - id: permissions
         valueFrom: "download"
       - id: synapse_config
@@ -156,8 +156,8 @@ steps:
         source: "#synapseConfig"
       - id: submissionid
         source: "#submissionId"
-      - id: admin
-        source: "#admin"
+      - id: organizers
+        source: "#organizers"
       - id: check_validation_finished 
         source: "#check_status/finished"
     out:
