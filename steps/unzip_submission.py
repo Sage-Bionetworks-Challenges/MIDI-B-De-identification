@@ -70,22 +70,24 @@ def create_config(file_paths):
     }
 
     images = []
-    writeup = None
+    #remove writeup
+    # writeup = None
 
     for file_path in file_paths:
         if "mappings" in file_path and "uid_mapping" in file_path:
             config["uid_mapping_file"] = file_path
         elif "mappings" in file_path and "patid_mapping" in file_path:
             config["patid_mapping_file"] = file_path
-        elif "writeup" in file_path:
-            writeup = file_path
+        #remove writeup
+        # elif "writeup" in file_path:
+        #     writeup = file_path
         else:
             images.append(file_path)
 
     if images:
         config["input_data_path"] = os.path.dirname(images[0])
     
-    return config, writeup
+    return config #, writeup #remove writeup
 
 def main():
     """Main function."""
@@ -105,7 +107,8 @@ def main():
     config, writeup = create_config(file_paths)
 
     # Print the write-up file path and the config.json content
-    print("Write-up file path:", writeup)
+    #remove writeup
+    # print("Write-up file path:", writeup)
     print(json.dumps(config, indent=4))
 
 if __name__ == "__main__":

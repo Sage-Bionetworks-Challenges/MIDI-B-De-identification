@@ -17,7 +17,7 @@ requirements:
       import tarfile
 
       parser = argparse.ArgumentParser()
-      parser.add_argument("--dciovdfy_file", required=True)
+      parser.add_argument("--dciodvfy_file", required=True)
       parser.add_argument("--discrepancy_file", required=True)
       parser.add_argument("--scoring_file", required=True)
       parser.add_argument("-c", "--synapse_config", required=True)
@@ -29,9 +29,9 @@ requirements:
 
       results = {}
 
-      dciovdfy = synapseclient.File(args.dciovdfy_file, parent=args.parent_id)
-      dciovdfy = syn.store(dciovdfy)
-      results['dciovdfy'] = dciovdfy.id
+      dciodvfy = synapseclient.File(args.dciodvfy_file, parent=args.parent_id)
+      dciodvfy = syn.store(dciodvfy)
+      results['dciodvfy'] = dciodvfy.id
 
       discrepancy = synapseclient.File(args.discrepancy_file, parent=args.parent_id)
       discrepancy = syn.store(discrepancy)
@@ -44,7 +44,7 @@ requirements:
           json.dump(results, out)
 
 inputs:
-- id: dciovdfy_results
+- id: dciodvfy_results
   type: File
 - id: discrepancy_results
   type: File
@@ -60,11 +60,12 @@ outputs:
   type: File
   outputBinding:
     glob: results.json
-- id: dciovdfy_synid
+
+- id: dciodvfy_synid
   type: string
   outputBinding:
     glob: results.json
-    outputEval: $(JSON.parse(self[0].contents)['dciovdfy'])
+    outputEval: $(JSON.parse(self[0].contents)['dciodvfy'])
     loadContents: true
 
 - id: discrepancy_synid
@@ -85,8 +86,8 @@ outputs:
 baseCommand: python3
 arguments:
 - valueFrom: upload_results_to_synapse.py
-- prefix: --dciovdfy_file
-  valueFrom: $(inputs.dciovdfy_results)
+- prefix: --dciodvfy_file
+  valueFrom: $(inputs.dciodvfy_results)
 - prefix: --discrepancy_file
   valueFrom: $(inputs.discrepancy_results)
 - prefix: --scoring_file
