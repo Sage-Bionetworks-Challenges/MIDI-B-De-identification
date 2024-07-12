@@ -36,8 +36,12 @@ outputs:
       outputEval: $(JSON.parse(self[0].contents)['submission_errors'])
       loadContents: true
 
-baseCommand: python3
+baseCommand: python
 arguments:
-  - valueFrom: unzip_submission.py
+  - valueFrom: MIDI_validation_script/unzip_submission.py
   - prefix: --compressed_file
     valueFrom: $(inputs.compressed_file)
+
+hints:
+  DockerRequirement:
+    dockerPull: docker.synapse.org/syn53065762/validate_score:v5
