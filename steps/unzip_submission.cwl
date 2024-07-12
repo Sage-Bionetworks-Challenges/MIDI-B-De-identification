@@ -36,12 +36,8 @@ outputs:
       outputEval: $(JSON.parse(self[0].contents)['submission_errors'])
       loadContents: true
 
-baseCommand: python
+baseCommand: python3
 arguments:
   - valueFrom: steps/unzip_submission.py
   - prefix: --compressed_file
     valueFrom: $(inputs.compressed_file)
-
-hints:
-  DockerRequirement:
-    dockerPull: python:3.9.1-slim-buster
