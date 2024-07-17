@@ -150,8 +150,8 @@ steps:
         source: "#unzip_generate_config/config_file"
     out:
       - id: scoring_results
-      - id: results
-      - id: status
+      # - id: results
+      # - id: status
     
 
   create_discrepancy_report:

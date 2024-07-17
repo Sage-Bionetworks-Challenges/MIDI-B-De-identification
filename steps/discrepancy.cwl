@@ -37,4 +37,4 @@ arguments:
 
 hints:
   DockerRequirement:
-    dockerPull: docker.synapse.org/syn53065762/validate_score:v5
+    dockerPull: docker.synapse.org/syn53065762/validate_score:v11

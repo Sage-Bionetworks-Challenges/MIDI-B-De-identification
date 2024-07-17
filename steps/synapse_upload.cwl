@@ -44,58 +44,58 @@ requirements:
           json.dump(results, out)
 
 inputs:
-- id: dciodvfy_results
-  type: File
-- id: discrepancy_results
-  type: File
-- id: scoring_results
-  type: File
-- id: parent_id
-  type: string
-- id: synapse_config
-  type: File
+  - id: dciodvfy_results
+    type: File
+  - id: discrepancy_results
+    type: File
+  - id: scoring_results
+    type: File
+  - id: parent_id
+    type: string
+  - id: synapse_config
+    type: File
 
 outputs:
-- id: results
-  type: File
-  outputBinding:
-    glob: results.json
+  - id: results
+    type: File
+    outputBinding:
+      glob: results.json
 
-- id: dciodvfy_synid
-  type: string
-  outputBinding:
-    glob: results.json
-    outputEval: $(JSON.parse(self[0].contents)['dciodvfy'])
-    loadContents: true
+  - id: dciodvfy_synid
+    type: string
+    outputBinding:
+      glob: results.json
+      outputEval: $(JSON.parse(self[0].contents)['dciodvfy'])
+      loadContents: true
 
-- id: discrepancy_synid
-  type: string
-  outputBinding:
-    glob: results.json
-    outputEval: $(JSON.parse(self[0].contents)['discrepancy'])
-    loadContents: true
+  - id: discrepancy_synid
+    type: string
+    outputBinding:
+      glob: results.json
+      outputEval: $(JSON.parse(self[0].contents)['discrepancy'])
+      loadContents: true
 
-- id: scoring_synid
-  type: string
-  outputBinding:
-    glob: results.json
-    outputEval: $(JSON.parse(self[0].contents)['scoring'])
-    loadContents: true
+  - id: scoring_synid
+    type: string
+    outputBinding:
+      glob: results.json
+      outputEval: $(JSON.parse(self[0].contents)['scoring'])
+      loadContents: true
 
 
 baseCommand: python3
 arguments:
-- valueFrom: upload_results_to_synapse.py
-- prefix: --dciodvfy_file
-  valueFrom: $(inputs.dciodvfy_results)
-- prefix: --discrepancy_file
-  valueFrom: $(inputs.discrepancy_results)
-- prefix: --scoring_file
-  valueFrom: $(inputs.scoring_results)
-- prefix: -c
-  valueFrom: $(inputs.synapse_config.path)
-- prefix: --parent_id
-  valueFrom: $(inputs.parent_id)
+  - valueFrom: upload_results_to_synapse.py
+  - prefix: --dciodvfy_file
+    valueFrom: $(inputs.dciodvfy_results)
+  - prefix: --discrepancy_file
+    valueFrom: $(inputs.discrepancy_results)
+  - prefix: --scoring_file
+    valueFrom: $(inputs.scoring_results)
+  - prefix: -c
+    valueFrom: $(inputs.synapse_config.path)
+  - prefix: --parent_id
+    valueFrom: $(inputs.parent_id)
 
 hints:
   DockerRequirement:
