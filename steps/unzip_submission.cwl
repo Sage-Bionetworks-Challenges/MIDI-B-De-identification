@@ -38,7 +38,7 @@ outputs:
 
 baseCommand: python
 arguments:
-  - valueFrom: MIDI_validation_script/unzip_submission.py
+  - valueFrom: /usr/local/bin/MIDI_validation_script/unzip_submission.py
   - prefix: --compressed_file
     valueFrom: $(inputs.compressed_file)
 
