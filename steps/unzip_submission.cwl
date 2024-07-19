@@ -23,7 +23,7 @@ outputs:
     type: string
     outputBinding:
       glob: results.json
-      outputEval: $(JSON.parse(self[0].contents)['submission_status'])
+      outputEval: $(JSON.parse(self[0].contents)['status'])
       loadContents: true
   # remove check for writeup file
   # - id: writeup_file
@@ -33,7 +33,7 @@ outputs:
     type: string
     outputBinding:
       glob: results.json
-      outputEval: $(JSON.parse(self[0].contents)['submission_errors'])
+      outputEval: $(JSON.parse(self[0].contents)['errors'])
       loadContents: true
 
 baseCommand: python
