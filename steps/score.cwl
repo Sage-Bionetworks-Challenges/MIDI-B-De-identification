@@ -8,7 +8,7 @@ requirements:
   - class: InlineJavascriptRequirement
 
 inputs:
-  - id: config_file
+  - id: compressed_file
     type: File
 
 outputs:
@@ -32,8 +32,8 @@ outputs:
 baseCommand: python
 arguments:
   - valueFrom: MIDI_validation_script/run_validation.py
-  - prefix: --config_file
-    valueFrom: $(inputs.config_file)
+  - prefix: --compressed_file
+    valueFrom: $(inputs.compressed_file)
 
 hints:
   DockerRequirement:
