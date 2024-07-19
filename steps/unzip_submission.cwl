@@ -13,6 +13,8 @@ inputs:
 outputs:
   - id: config_file
     type: File
+    outputBinding:
+      glob: config.json
 
   - id: results
     type: File
