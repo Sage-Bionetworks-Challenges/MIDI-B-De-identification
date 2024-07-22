@@ -9,7 +9,7 @@ requirements:
 
 inputs:
   - id: compressed_file
-    type: File
+    type: Directory
 
 outputs:
   - id: discrepancy_results
