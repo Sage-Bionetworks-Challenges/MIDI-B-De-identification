@@ -15,7 +15,12 @@ outputs:
   - id: scoring_results
     type: File
     outputBinding:
-      glob: scoringreport.csv
+      glob: pixel_validation.xlsx
+
+  - id: database_created
+    type: File
+    outputBinding:
+      glob: validation_results.db
 
   # - id: results
   #   type: File

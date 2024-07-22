@@ -10,8 +10,16 @@ requirements:
 inputs:
   - id: compressed_file
     type: File
+  - id: database_created
+    type: File
 
 outputs:
+
+  - id: scoring_results
+    type: File
+    outputBinding:
+      glob: scoringreport.csv
+
   - id: discrepancy_results
     type: File
     outputBinding:
