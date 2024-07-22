@@ -9,7 +9,7 @@ requirements:
 
 inputs:
   - id: compressed_file
-    type: Directory
+    type: File
 
 outputs:
   - id: dciodvfy_results
