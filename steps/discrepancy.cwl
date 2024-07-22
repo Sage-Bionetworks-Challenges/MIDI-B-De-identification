@@ -18,12 +18,18 @@ outputs:
   - id: scoring_results
     type: File
     outputBinding:
-      glob: scoringreport.csv
+      glob: scoring_report_series.xlsx
 
   - id: discrepancy_results
     type: File
     outputBinding:
-      glob: discrepancy_report.csv
+      glob: discrepancy_report_participant.csv
+  
+  - id: discrepancy_internal
+    type: File
+    outputBinding:
+      glob: discrepancy_report_internal.csv
+  
 
   # - id: results
   #   type: File
