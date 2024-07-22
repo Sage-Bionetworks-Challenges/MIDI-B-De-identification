@@ -162,7 +162,7 @@ steps:
       - id: compressed_file
         source: "#download_submission/filepath"
       - id: database_created
-      source: "#create_scoring_report/database_created"
+        source: "#create_scoring_report/database_created"
     out:
       - id: discrepancy_results
 
