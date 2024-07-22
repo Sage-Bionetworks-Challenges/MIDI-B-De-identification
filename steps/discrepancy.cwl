@@ -31,7 +31,7 @@ outputs:
 
 baseCommand: python
 arguments:
-  - valueFrom: MIDI_validation_script/run_reports.py
+  - valueFrom: /usr/local/bin/MIDI_validation_script/run_reports.py
   - prefix: --compressed_file
     valueFrom: $(inputs.compressed_file)
 
