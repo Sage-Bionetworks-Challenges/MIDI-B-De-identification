@@ -16,10 +16,7 @@ inputs:
     type: File
     inputBinding:
       position: 1  # Ensures this input appears directly as the first argument
-  answer_database:
-    type: File
-    # No inputBinding here since this file is handled internally by the container
-
+  
 outputs:
   scoring_results:
     type: File
