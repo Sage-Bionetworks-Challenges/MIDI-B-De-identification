@@ -17,7 +17,7 @@ requirements:
       import tarfile
 
       parser = argparse.ArgumentParser()
-      parser.add_argument("--dciodvfy_file", required=True)
+      #parser.add_argument("--dciodvfy_file", required=True)
       parser.add_argument("--discrepancy_file", required=True)
       parser.add_argument("--scoring_file", required=True)
       parser.add_argument("-c", "--synapse_config", required=True)
@@ -28,10 +28,10 @@ requirements:
       syn.login()
 
       results = {}
-
-      dciodvfy = synapseclient.File(args.dciodvfy_file, parent=args.parent_id)
-      dciodvfy = syn.store(dciodvfy)
-      results['dciodvfy'] = dciodvfy.id
+      # results will no longer be generated for this step 
+      # dciodvfy = synapseclient.File(args.dciodvfy_file, parent=args.parent_id)
+      # dciodvfy = syn.store(dciodvfy)
+      # results['dciodvfy'] = dciodvfy.id
 
       discrepancy = synapseclient.File(args.discrepancy_file, parent=args.parent_id)
       discrepancy = syn.store(discrepancy)
@@ -44,8 +44,9 @@ requirements:
           json.dump(results, out)
 
 inputs:
-  - id: dciodvfy_results
-    type: File
+  # results will no longer be generated for this step 
+  # - id: dciodvfy_results
+  #   type: File
   - id: discrepancy_results
     type: File
   - id: scoring_results
@@ -61,12 +62,13 @@ outputs:
     outputBinding:
       glob: results.json
 
-  - id: dciodvfy_synid
-    type: string
-    outputBinding:
-      glob: results.json
-      outputEval: $(JSON.parse(self[0].contents)['dciodvfy'])
-      loadContents: true
+  # results will no longer be generated for this step 
+  # - id: dciodvfy_synid
+  #   type: string
+  #   outputBinding:
+  #     glob: results.json
+  #     outputEval: $(JSON.parse(self[0].contents)['dciodvfy'])
+  #     loadContents: true
 
   - id: discrepancy_synid
     type: string
@@ -75,19 +77,20 @@ outputs:
       outputEval: $(JSON.parse(self[0].contents)['discrepancy'])
       loadContents: true
 
-  - id: scoring_synid
-    type: string
-    outputBinding:
-      glob: results.json
-      outputEval: $(JSON.parse(self[0].contents)['scoring'])
-      loadContents: true
+  # - id: scoring_synid
+  #   type: string
+  #   outputBinding:
+  #     glob: results.json
+  #     outputEval: $(JSON.parse(self[0].contents)['scoring'])
+  #     loadContents: true
 
 
 baseCommand: python3
 arguments:
   - valueFrom: upload_results_to_synapse.py
-  - prefix: --dciodvfy_file
-    valueFrom: $(inputs.dciodvfy_results)
+  # results will no longer be generated for this step 
+  # - prefix: --dciodvfy_file
+  #   valueFrom: $(inputs.dciodvfy_results)
   - prefix: --discrepancy_file
     valueFrom: $(inputs.discrepancy_results)
   - prefix: --scoring_file
