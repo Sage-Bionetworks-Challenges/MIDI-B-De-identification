@@ -8,7 +8,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - entryname: /MIDI_validation_script/midi_1_1_answer_data_1.db
+      - entryname: /usr/local/bin/MIDI_validation_script/midi_1_1_answer_data_1.db
         entry: $(inputs.answer_database.path)  # Ensure the database file is available in the container
 
 inputs:
@@ -18,6 +18,8 @@ inputs:
       position: 1  # Ensures this input appears directly as the first argument
   answer_database:
     type: File
+    # No inputBinding here since this file is handled internally by the container
+
 outputs:
   scoring_results:
     type: File
