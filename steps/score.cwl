@@ -6,7 +6,6 @@ label: Run the submission against the Organizers pipeline for Scoring
 
 requirements:
   - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
     
 inputs:
   compressed_file:
