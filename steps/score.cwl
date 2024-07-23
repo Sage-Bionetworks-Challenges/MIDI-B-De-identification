@@ -7,10 +7,7 @@ label: Run the submission against the Organizers pipeline for Scoring
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
-    listing:
-      - entryname: /usr/local/bin/MIDI_validation_script/midi_1_1_answer_data_1.db
-        entry: $(inputs.answer_database.path)  # Ensure the database file is available in the container
-
+    
 inputs:
   compressed_file:
     type: File
