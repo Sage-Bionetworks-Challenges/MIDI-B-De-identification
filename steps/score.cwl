@@ -6,13 +6,18 @@ label: Run the submission against the Organizers pipeline for Scoring
 
 requirements:
   - class: InlineJavascriptRequirement
+  - class: InitialWorkDirRequirement
+    listing:
+      - entryname: /MIDI_validation_script/midi_1_1_answer_data_1.db
+        entry: $(inputs.answer_database.path)  # Ensure the database file is available in the container
 
 inputs:
   compressed_file:
     type: File
     inputBinding:
       position: 1  # Ensures this input appears directly as the first argument
-
+  answer_database:
+    type: File
 outputs:
   scoring_results:
     type: File
@@ -32,4 +37,3 @@ arguments:
 hints:
   DockerRequirement:
     dockerPull: docker.synapse.org/syn53065762/validate_score:v12
-
