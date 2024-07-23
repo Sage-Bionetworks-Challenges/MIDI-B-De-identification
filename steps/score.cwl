@@ -8,35 +8,25 @@ requirements:
   - class: InlineJavascriptRequirement
 
 inputs:
-  - id: compressed_file
+  compressed_file:
     type: File
+    inputBinding:
+      position: 1
 
 outputs:
-  - id: scoring_results
+  scoring_results:
     type: File
     outputBinding:
       glob: pixel_validation.xlsx
 
-  - id: database_created
+  database_created:
     type: File
     outputBinding:
       glob: validation_results.db
 
-  # - id: results
-  #   type: File
-  #   outputBinding:
-  #     glob: results.json
-
-  # - id: status
-  #   type: string
-  #   outputBinding:
-  #     glob: results.json
-  #     outputEval: $(JSON.parse(self[0].contents)['submission_status'])
-  #     loadContents: true
-
 baseCommand: python
 arguments:
-  - valueFrom: /usr/local/bin/MIDI_validation_script/run_validation.py
+  - /usr/local/bin/MIDI_validation_script/run_validation.py
   - prefix: --compressed_file
     valueFrom: $(inputs.compressed_file.path)
 
