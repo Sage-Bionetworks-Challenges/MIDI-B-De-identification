@@ -184,16 +184,18 @@ steps:
         source: "#synapseConfig"
       - id: parent_id  # this input is needed so that Synapse knows where to upload file
         source: "#adminUploadSynId"
-      - id: dciodvfy_results
-        source: "#create_dciodvfy_report/dciodvfy_results"
+      # removed since this step is no longer happening
+      # - id: dciodvfy_results
+      #   source: "#create_dciodvfy_report/dciodvfy_results"
       - id: discrepancy_results
         source: "#create_discrepancy_report/discrepancy_results"
       - id: scoring_results
         source: "#create_scoring_report/scoring_results"
     out:
-      - id: dciodvfy_synid
+      # removed since this step is no longer happening
+      # - id: dciodvfy_synid
       - id: discrepancy_synid
-      - id: scoring_synid
+      # - id: scoring_synid
       - id: results
       
   # download_goldstandard:
