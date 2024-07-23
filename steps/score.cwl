@@ -38,7 +38,7 @@ baseCommand: python
 arguments:
   - valueFrom: /usr/local/bin/MIDI_validation_script/run_validation.py
   - prefix: --compressed_file
-    valueFrom: $(inputs.compressed_file)
+    valueFrom: $(inputs.compressed_file.path)
 
 hints:
   DockerRequirement:
