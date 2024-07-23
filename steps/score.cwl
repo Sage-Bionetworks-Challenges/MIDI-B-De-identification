@@ -11,7 +11,7 @@ inputs:
   compressed_file:
     type: File
     inputBinding:
-      position: 1
+      position: 1  # Ensures this input appears directly as the first argument
 
 outputs:
   scoring_results:
@@ -24,18 +24,12 @@ outputs:
     outputBinding:
       glob: validation_results.db
 
-  command_output:
-    type: stdout
-
 baseCommand: python
 arguments:
-  - valueFrom: /usr/local/bin/MIDI_validation_script/run_validation.py
-  - prefix: --compressed_file
-    separate: true
-    valueFrom: $(inputs.compressed_file.path)
+  - /usr/local/bin/MIDI_validation_script/run_validation.py
+  - $(inputs.compressed_file.path)
 
 hints:
   DockerRequirement:
     dockerPull: docker.synapse.org/syn53065762/validate_score:v12
 
-stdout: output.log
