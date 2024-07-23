@@ -165,15 +165,17 @@ steps:
         source: "#create_scoring_report/database_created"
     out:
       - id: discrepancy_results
+      - id: discrepancy_internal
+      - id: scoring_results
 
 
-  create_dciodvfy_report:
-    run: steps/dicovdfy.cwl
-    in:
-      - id: compressed_file
-        source: "#download_submission/filepath"
-    out:
-      - id: dciodvfy_results
+  # create_dciodvfy_report:
+  #   run: steps/dicovdfy.cwl
+  #   in:
+  #     - id: compressed_file
+  #       source: "#download_submission/filepath"
+  #   out:
+  #     - id: dciodvfy_results
 
   upload_to_synapse:
     run: steps/synapse_upload.cwl
