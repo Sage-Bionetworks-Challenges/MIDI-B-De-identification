@@ -22,17 +22,17 @@ outputs:
   scoring_results:
     type: File
     outputBinding:
-      glob: scoring_report_series.xlsx
+      glob: results/scoring_report_series.xlsx
 
   discrepancy_results:
     type: File
     outputBinding:
-      glob: discrepancy_report_participant.csv
+      glob: results/discrepancy_report_participant.csv
   
   discrepancy_internal:
     type: File
     outputBinding:
-      glob: discrepancy_report_internal.csv
+      glob: results/discrepancy_report_internal.csv
 
 baseCommand: python
 arguments:

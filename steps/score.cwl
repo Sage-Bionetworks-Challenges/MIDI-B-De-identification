@@ -19,7 +19,7 @@ outputs:
   scoring_results:
     type: File
     outputBinding:
-      glob: pixel_validation.xlsx
+      glob: results/pixel_validation.xlsx
 
   database_created:
     type: File
