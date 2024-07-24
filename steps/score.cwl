@@ -8,18 +8,23 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     ramMin: 16000  # Request 16GB of memory
-
+    
 inputs:
   compressed_file:
     type: File
     inputBinding:
       position: 1  # Ensures this input appears directly as the first argument
-
+  
 outputs:
-  results_directory:
-    type: Directory
+  scoring_results:
+    type: File
     outputBinding:
-      glob: 'results'
+      glob: 'results/**/pixel_validation.xlsx'
+
+  database_created:
+    type: File
+    outputBinding:
+      glob: 'results/**/validation_results.db'
 
 baseCommand: python
 arguments:
