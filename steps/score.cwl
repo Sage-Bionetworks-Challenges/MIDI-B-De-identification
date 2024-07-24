@@ -19,12 +19,12 @@ outputs:
   scoring_results:
     type: File
     outputBinding:
-      glob: results/pixel_validation.xlsx
+      glob: 'results/**/pixel_validation.xlsx'
 
   database_created:
     type: File
     outputBinding:
-      glob: results/MIDI_1_1_Testing/validation_results.db
+      glob: 'results/**/validation_results.db'
 
 baseCommand: python
 arguments:
