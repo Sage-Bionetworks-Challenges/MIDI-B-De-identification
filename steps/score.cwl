@@ -6,6 +6,8 @@ label: Run the submission against the Organizers pipeline for Scoring
 
 requirements:
   - class: InlineJavascriptRequirement
+  - class: ResourceRequirement
+    ramMin: 16000  # Request 16GB of memory
     
 inputs:
   compressed_file:
