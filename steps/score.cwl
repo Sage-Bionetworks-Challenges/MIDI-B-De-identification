@@ -22,7 +22,7 @@ outputs:
   database_created:
     type: File
     outputBinding:
-      glob: validation_results.db
+      glob: results/MIDI_1_1_Testing/validation_results.db
 
 baseCommand: python
 arguments:
