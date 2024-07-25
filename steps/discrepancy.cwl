@@ -32,7 +32,7 @@ outputs:
   discrepancy_internal:
     type: File
     outputBinding:
-      glob: '**/discrepancy_report_internal.csv'
+      glob: 'results/**/discrepancy_report_internal.csv'
 
 baseCommand: python
 arguments:
