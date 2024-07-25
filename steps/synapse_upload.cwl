@@ -62,8 +62,11 @@ outputs:
     outputBinding:
       glob: results.json
   
-  - id: parent_id
-    type: string
+  # - id: parent_id
+  #   type: File
+  #   outputBinding:
+  #     glob: results.json
+  #     outputEval: $(JSON.parse(self[0].contents)['dciodvfy'])
 
   # results will no longer be generated for this step 
   # - id: dciodvfy_synid

@@ -184,7 +184,7 @@ steps:
       # removed since this step is no longer happening
       # - id: dciodvfy_synid
       # - id: discrepancy_synid
-      - id: parent_id
+      # - id: parent_id
       - id: results
       
   # download_goldstandard:
