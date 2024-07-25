@@ -61,6 +61,9 @@ outputs:
     type: File
     outputBinding:
       glob: results.json
+  
+  - id: parent_id
+    type: string
 
   # results will no longer be generated for this step 
   # - id: dciodvfy_synid
@@ -70,12 +73,12 @@ outputs:
   #     outputEval: $(JSON.parse(self[0].contents)['dciodvfy'])
   #     loadContents: true
 
-  - id: discrepancy_synid
-    type: string
-    outputBinding:
-      glob: results.json
-      outputEval: $(JSON.parse(self[0].contents)['discrepancy'])
-      loadContents: true
+  # - id: discrepancy_synid
+  #   type: string
+  #   outputBinding:
+  #     glob: results.json
+  #     outputEval: $(JSON.parse(self[0].contents)['discrepancy'])
+  #     loadContents: true
 
   # - id: scoring_synid
   #   type: string
