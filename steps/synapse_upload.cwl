@@ -13,10 +13,8 @@ requirements:
       import synapseclient
       import argparse
       import json
-      import openpyxl
       import os
       import tarfile
-      import pandas as pd 
 
       parser = argparse.ArgumentParser()
       #parser.add_argument("--dciodvfy_file", required=True)
@@ -27,10 +25,10 @@ requirements:
       args = parser.parse_args()
 
       #Create a dataframe of the scoring file
-      score_data = pd.read_excel(args.scoring_file)
+      # score_data = pd.read_excel(args.scoring_file)
 
       #Record the score for display in the Synapse View
-      final_score = score_data['Score'][0]
+      # final_score = score_data['Score'][0]
 
       # Begin template Synapse Upload script
       syn = synapseclient.Synapse(configPath=args.synapse_config)
