@@ -16,7 +16,7 @@ inputs:
       position: 1  # Ensures this input appears directly as the first argument
 
 outputs:
-  scoring_results:
+  pixel_results:
     type: File
     outputBinding:
       glob: 'results/MIDI_1_1_Testing/pixel_validation.xlsx'
