@@ -104,6 +104,7 @@ steps:
       - id: database_created
       - id: results
       - id: status
+      - id: invalid_reasons
 
   notify_filepath_status:
     doc: Notify participant if submission is not a Docker image.
