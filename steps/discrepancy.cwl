@@ -24,12 +24,12 @@ outputs:
     type: File
     outputBinding:
       glob: 'results/**/scoring_report_series.xlsx'
-  
+
   discrepancy_results:
     type: File
     outputBinding:
       glob: 'results/**/discrepancy_report_participant.csv'
-
+  
   discrepancy_internal:
     type: File
     outputBinding:
@@ -37,29 +37,7 @@ outputs:
 
 baseCommand: python
 arguments:
-  - -c
-  - |
-    import os
-    import sys
-    import glob
-    # Print the working directory and list files for debugging
-    print("Working Directory: ", os.getcwd())
-    print("Files in working directory: ", os.listdir(os.getcwd()))
-    # Check if database file exists and is readable
-    db_files = glob.glob('**/validation_results.db', recursive=True)
-    if db_files:
-        db_path = db_files[0]
-        print(f"Database file found: {db_path}")
-        if os.access(db_path, os.R_OK):
-            print("Database file is accessible.")
-        else:
-            print("Database file is not accessible.")
-            sys.exit(1)
-    else:
-        print("Database file does not exist.")
-        sys.exit(1)
-    # Execute the main script
-    exec(open("/usr/local/bin/MIDI_validation_script/run_reports.py").read())
+  - /usr/local/bin/MIDI_validation_script/run_reports.py
   - $(inputs.compressed_file.path)
 
 hints:
