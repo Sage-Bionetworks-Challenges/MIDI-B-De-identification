@@ -37,7 +37,14 @@ outputs:
       glob: results.json
       outputEval: $(JSON.parse(self[0].contents)['status'])
       loadContents: true
-
+  
+  invalid_reasons
+    type: string
+    outputBinding:
+      glob: results.json
+      outputEval: $(JSON.parse(self[0].contents)['errors'])
+      loadContents: true
+      
 baseCommand: python
 arguments:
   - /usr/local/bin/MIDI_validation_script/run_validation.py
