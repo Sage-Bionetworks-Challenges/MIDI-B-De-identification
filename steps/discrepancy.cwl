@@ -8,7 +8,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - entryname: validation_results.db
+      - entryname: MIDI_validation_script/validation_results.db
         entry: $(inputs.database_created.path)
 
 inputs:
