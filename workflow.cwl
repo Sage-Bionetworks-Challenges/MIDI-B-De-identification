@@ -80,34 +80,23 @@ steps:
       - id: entity_type
       - id: results
 
-  # unzip_generate_config:
-  #   run: steps/unzip_submission.cwl
-  #   in:
-  #     - id: compressed_file
-  #       source: "#download_submission/filepath"
-  #   out:
-  #     - id: config_file
-  #     #remove writeup file output
-  #     # - id: writeup_file
-  #     - id: unzipped_directory
-  #     - id: results
-  #     - id: status
-  #     - id: invalid_reasons
-
   create_scoring_report:
-    run: steps/score.cwl
+    run: steps/test.cwl
     in:
       - id: compressed_file
         source: "#download_submission/filepath"
     out:
-      - id: scoring_results
+      - id: pixel_results
       - id: database_created
       - id: results
       - id: status
       - id: invalid_reasons
+      - id: scoring_results
+      - id: discrepancy_results
+      - id: discrepancy_internal
 
   notify_filepath_status:
-    doc: Notify participant if submission is not a Docker image.
+    doc: Notify participant if submission is not acceptable.
     run: |-
       https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/validate_email.cwl
     in:
@@ -156,17 +145,17 @@ steps:
     out: [finished]
     
 
-  create_discrepancy_report:
-    run: steps/discrepancy.cwl
-    in:
-      - id: compressed_file
-        source: "#download_submission/filepath"
-      - id: database_created
-        source: "#create_scoring_report/database_created"
-    out:
-      - id: discrepancy_results
-      - id: discrepancy_internal
-      - id: scoring_results
+  # create_discrepancy_report:
+  #   run: steps/discrepancy.cwl
+  #   in:
+  #     - id: compressed_file
+  #       source: "#download_submission/filepath"
+  #     - id: database_created
+  #       source: "#create_scoring_report/database_created"
+  #   out:
+  #     - id: discrepancy_results
+  #     - id: discrepancy_internal
+  #     - id: scoring_results
 
 
   # create_dciodvfy_report:
@@ -188,14 +177,14 @@ steps:
       # - id: dciodvfy_results
       #   source: "#create_dciodvfy_report/dciodvfy_results"
       - id: discrepancy_results
-        source: "#create_discrepancy_report/discrepancy_results"
+        source: "#create_scoring_report/discrepancy_results"
       - id: scoring_results
         source: "#create_scoring_report/scoring_results"
     out:
       # removed since this step is no longer happening
       # - id: dciodvfy_synid
-      - id: discrepancy_synid
-      # - id: scoring_synid
+      # - id: discrepancy_synid
+      - id: scoring_synid
       - id: results
       
   # download_goldstandard:
