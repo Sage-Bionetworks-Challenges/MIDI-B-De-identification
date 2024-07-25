@@ -8,7 +8,8 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - $(inputs.database_created)  # Ensure the database file is in the working directory
+      - entryname: validation_results.db  # Specify the target name
+        entry: $(inputs.database_created.path)
 
 inputs:
   compressed_file:
@@ -36,7 +37,22 @@ outputs:
 
 baseCommand: python
 arguments:
-  - /usr/local/bin/MIDI_validation_script/run_reports.py
+  - -c
+  - |
+    import os
+    import sys
+    # Print the working directory and list files for debugging
+    print("Working Directory: ", os.getcwd())
+    print("Files in working directory: ", os.listdir(os.getcwd()))
+    # Check if database file exists and is readable
+    db_path = "database_created.db"
+    if os.path.exists(db_path) and os.access(db_path, os.R_OK):
+        print("Database file is accessible.")
+    else:
+        print("Database file is not accessible or does not exist.")
+        sys.exit(1)
+    # Execute the main script
+    exec(open("/usr/local/bin/MIDI_validation_script/run_reports.py").read())
   - $(inputs.compressed_file.path)
 
 hints:
