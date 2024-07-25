@@ -26,6 +26,18 @@ outputs:
     outputBinding:
       glob: 'results/**/validation_results.db'
 
+  results
+    type: File
+    outputBinding:
+      glob: results.json
+
+  status
+    type: string
+    outputBinding:
+      glob: results.json
+      outputEval: $(JSON.parse(self[0].contents)['status'])
+      loadContents: true
+
 baseCommand: python
 arguments:
   - /usr/local/bin/MIDI_validation_script/run_validation.py
