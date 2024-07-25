@@ -8,14 +8,14 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - entryname: validation_results.db  # Specify the target name
+      - entryname: validation_results.db
         entry: $(inputs.database_created.path)
 
 inputs:
   compressed_file:
     type: File
     inputBinding:
-      position: 1  # Ensures this input appears directly as the first argument
+      position: 1
   database_created:
     type: File
 
@@ -24,12 +24,12 @@ outputs:
     type: File
     outputBinding:
       glob: 'results/**/scoring_report_series.xlsx'
-
+  
   discrepancy_results:
     type: File
     outputBinding:
       glob: 'results/**/discrepancy_report_participant.csv'
-  
+
   discrepancy_internal:
     type: File
     outputBinding:
@@ -41,15 +41,22 @@ arguments:
   - |
     import os
     import sys
+    import glob
     # Print the working directory and list files for debugging
     print("Working Directory: ", os.getcwd())
     print("Files in working directory: ", os.listdir(os.getcwd()))
     # Check if database file exists and is readable
-    db_path = "database_created.db"
-    if os.path.exists(db_path) and os.access(db_path, os.R_OK):
-        print("Database file is accessible.")
+    db_files = glob.glob('**/validation_results.db', recursive=True)
+    if db_files:
+        db_path = db_files[0]
+        print(f"Database file found: {db_path}")
+        if os.access(db_path, os.R_OK):
+            print("Database file is accessible.")
+        else:
+            print("Database file is not accessible.")
+            sys.exit(1)
     else:
-        print("Database file is not accessible or does not exist.")
+        print("Database file does not exist.")
         sys.exit(1)
     # Execute the main script
     exec(open("/usr/local/bin/MIDI_validation_script/run_reports.py").read())
