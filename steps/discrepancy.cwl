@@ -8,7 +8,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - entryname: MIDI_validation_script/validation_results.db
+      - entryname: 'results/MIDI_1_1_Testing/validation_results.db'
         entry: $(inputs.database_created.path)
 
 inputs:
@@ -23,17 +23,17 @@ outputs:
   scoring_results:
     type: File
     outputBinding:
-      glob: 'results/**/scoring_report_series.xlsx'
+      glob: 'results/MIDI_1_1_Testing/scoring_report_series.xlsx'
 
   discrepancy_results:
     type: File
     outputBinding:
-      glob: 'results/**/discrepancy_report_participant.csv'
+      glob: 'results/MIDI_1_1_Testing/discrepancy_report_participant.csv'
   
   discrepancy_internal:
     type: File
     outputBinding:
-      glob: 'results/**/discrepancy_report_internal.csv'
+      glob: 'results/MIDI_1_1_Testing/discrepancy_report_internal.csv'
 
 baseCommand: python
 arguments:
