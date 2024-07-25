@@ -13,8 +13,10 @@ requirements:
       import synapseclient
       import argparse
       import json
+      import openpyxl
       import os
       import tarfile
+      import pandas as pd 
 
       parser = argparse.ArgumentParser()
       #parser.add_argument("--dciodvfy_file", required=True)
@@ -24,7 +26,15 @@ requirements:
       parser.add_argument("--parent_id", required=True)
       args = parser.parse_args()
 
+      #Create a dataframe of the scoring file
+      score_data = pd.read_excel(args.scoring_file)
+
+      #Record the score for display in the Synapse View
+      final_score = score_data['Score'][0]
+
+      # Begin template Synapse Upload script
       syn = synapseclient.Synapse(configPath=args.synapse_config)
+
       syn.login()
 
       results = {}
@@ -42,6 +52,8 @@ requirements:
       results['scoring'] = scoring.id
       with open('results.json', 'w') as out:
           json.dump(results, out)
+      
+
 
 inputs:
   # results will no longer be generated for this step 
@@ -62,35 +74,6 @@ outputs:
     outputBinding:
       glob: results.json
   
-  # - id: parent_id
-  #   type: File
-  #   outputBinding:
-  #     glob: results.json
-  #     outputEval: $(JSON.parse(self[0].contents)['dciodvfy'])
-
-  # results will no longer be generated for this step 
-  # - id: dciodvfy_synid
-  #   type: string
-  #   outputBinding:
-  #     glob: results.json
-  #     outputEval: $(JSON.parse(self[0].contents)['dciodvfy'])
-  #     loadContents: true
-
-  # - id: discrepancy_synid
-  #   type: string
-  #   outputBinding:
-  #     glob: results.json
-  #     outputEval: $(JSON.parse(self[0].contents)['discrepancy'])
-  #     loadContents: true
-
-  # - id: scoring_synid
-  #   type: string
-  #   outputBinding:
-  #     glob: results.json
-  #     outputEval: $(JSON.parse(self[0].contents)['scoring'])
-  #     loadContents: true
-
-
 baseCommand: python3
 arguments:
   - valueFrom: upload_results_to_synapse.py

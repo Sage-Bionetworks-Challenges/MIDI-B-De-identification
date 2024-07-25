@@ -181,22 +181,7 @@ steps:
       - id: scoring_results
         source: "#create_scoring_report/scoring_results"
     out:
-      # removed since this step is no longer happening
-      # - id: dciodvfy_synid
-      # - id: discrepancy_synid
-      # - id: parent_id
       - id: results
-      
-  # download_goldstandard:
-  #   run: https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/cwl-tool-synapseclient/v1.4/cwl/synapse-get-tool.cwl
-  #   in:
-  #     # TODO: replace `valueFrom` with the Synapse ID to the challenge goldstandard
-  #     - id: synapseid
-  #       valueFrom: "syn58613732"
-  #     - id: synapse_config
-  #       source: "#synapseConfig"
-  #   out:
-  #     - id: filepath_gold
   
   annotate_full_evaluation_with_output:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/annotate_submission.cwl
