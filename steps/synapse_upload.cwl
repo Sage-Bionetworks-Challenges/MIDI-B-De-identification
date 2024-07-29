@@ -7,13 +7,19 @@ requirements:
 - class: InlineJavascriptRequirement
 - class: InitialWorkDirRequirement
   listing:
+  - entryname: setup.sh
+        entry: |
+          #!/bin/bash
+          pip install openpyxl
   - entryname: upload_results_to_synapse.py
     entry: |
       #!/usr/bin/env python
       import synapseclient
       import argparse
       import json
+      import openpyxl
       import os
+      import pandas as pd
       import tarfile
 
       parser = argparse.ArgumentParser()
@@ -25,10 +31,10 @@ requirements:
       args = parser.parse_args()
 
       #Create a dataframe of the scoring file
-      # score_data = pd.read_excel(args.scoring_file)
+      score_data = pd.read_excel(args.scoring_file)
 
       #Record the score for display in the Synapse View
-      # final_score = score_data['Score'][0]
+      final_score = score_data['Score'][0]
 
       # Begin template Synapse Upload script
       syn = synapseclient.Synapse(configPath=args.synapse_config)
@@ -36,6 +42,8 @@ requirements:
       syn.login()
 
       results = {}
+
+      
       # results will no longer be generated for this step 
       # dciodvfy = synapseclient.File(args.dciodvfy_file, parent=args.parent_id)
       # dciodvfy = syn.store(dciodvfy)
@@ -48,6 +56,8 @@ requirements:
       scoring = synapseclient.File(args.scoring_file, parent=args.parent_id)
       scoring = syn.store(scoring)
       results['scoring'] = scoring.id
+      # Add the final score to the results file for synapse annotation
+      results['score'] = final_score
       with open('results.json', 'w') as out:
           json.dump(results, out)
       
