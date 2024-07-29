@@ -83,9 +83,9 @@ outputs:
       glob: results.json
   
 # baseCommand: python3
-baseCommand: ["/bin/bash"]
+baseCommand: ["/bin/bash", "setup.sh"]
 arguments:
-  - valueFrom: setup.sh && python3 upload_results_to_synapse.py
+  - valueFrom: python3 upload_results_to_synapse.py
   - prefix: --discrepancy_file
     valueFrom: $(inputs.discrepancy_results.path)
   - prefix: --scoring_file
