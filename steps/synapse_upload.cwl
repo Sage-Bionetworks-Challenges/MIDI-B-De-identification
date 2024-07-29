@@ -82,20 +82,31 @@ outputs:
     outputBinding:
       glob: results.json
   
-baseCommand: python3
+# baseCommand: python3
+baseCommand: ["/bin/bash"]
 arguments:
-  - valueFrom: upload_results_to_synapse.py
-  # results will no longer be generated for this step 
-  # - prefix: --dciodvfy_file
-  #   valueFrom: $(inputs.dciodvfy_results)
+  - valueFrom: setup.sh && python3 upload_results_to_synapse.py
   - prefix: --discrepancy_file
-    valueFrom: $(inputs.discrepancy_results)
+    valueFrom: $(inputs.discrepancy_results.path)
   - prefix: --scoring_file
-    valueFrom: $(inputs.scoring_results)
+    valueFrom: $(inputs.scoring_results.path)
   - prefix: -c
     valueFrom: $(inputs.synapse_config.path)
   - prefix: --parent_id
     valueFrom: $(inputs.parent_id)
+# arguments:
+#   - valueFrom: upload_results_to_synapse.py
+#   # results will no longer be generated for this step 
+#   # - prefix: --dciodvfy_file
+#   #   valueFrom: $(inputs.dciodvfy_results)
+#   - prefix: --discrepancy_file
+#     valueFrom: $(inputs.discrepancy_results)
+#   - prefix: --scoring_file
+#     valueFrom: $(inputs.scoring_results)
+#   - prefix: -c
+#     valueFrom: $(inputs.synapse_config.path)
+#   - prefix: --parent_id
+#     valueFrom: $(inputs.parent_id)
 
 hints:
   DockerRequirement:
