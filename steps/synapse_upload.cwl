@@ -8,9 +8,9 @@ requirements:
 - class: InitialWorkDirRequirement
   listing:
   - entryname: setup.sh
-        entry: |
-          #!/bin/bash
-          pip install openpyxl
+    entry: |
+      #!/bin/bash
+      pip install openpyxl
   - entryname: upload_results_to_synapse.py
     entry: |
       #!/usr/bin/env python
