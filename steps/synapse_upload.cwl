@@ -26,7 +26,7 @@ requirements:
       #parser.add_argument("--dciodvfy_file", required=True)
       parser.add_argument("--discrepancy_file", required=True)
       parser.add_argument("--scoring_file", required=True)
-      parser.add_argument("-c", "--synapse_config", required=True)
+      parser.add_argument("-c", required=True)
       parser.add_argument("--parent_id", required=True)
       args = parser.parse_args()
 
