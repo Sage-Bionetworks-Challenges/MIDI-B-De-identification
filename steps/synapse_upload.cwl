@@ -83,17 +83,16 @@ outputs:
       glob: results.json
   
 # baseCommand: python3
-baseCommand: ["/bin/bash", "setup.sh"]
+baseCommand: ["/bin/bash", "-c"]
 arguments:
-  - valueFrom: python3 upload_results_to_synapse.py
-  - prefix: --discrepancy_file
-    valueFrom: $(inputs.discrepancy_results.path)
-  - prefix: --scoring_file
-    valueFrom: $(inputs.scoring_results.path)
-  - prefix: -c
-    valueFrom: $(inputs.synapse_config.path)
-  - prefix: --parent_id
-    valueFrom: $(inputs.parent_id)
+  - valueFrom: |
+      set -e
+      ./setup.sh
+      python3 upload_results_to_synapse.py \
+        --discrepancy_file $(inputs.discrepancy_results.path) \
+        --scoring_file $(inputs.scoring_results.path) \
+        -c $(inputs.synapse_config.path) \
+        --parent_id $(inputs.parent_id)
 # arguments:
 #   - valueFrom: upload_results_to_synapse.py
 #   # results will no longer be generated for this step 
