@@ -87,6 +87,7 @@ baseCommand: ["/bin/bash", "-c"]
 arguments:
   - valueFrom: |
       set -e
+      chmod +x setup.sh
       ./setup.sh
       python3 upload_results_to_synapse.py \
         --discrepancy_file $(inputs.discrepancy_results.path) \
