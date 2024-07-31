@@ -26,7 +26,7 @@ requirements:
       #parser.add_argument("--dciodvfy_file", required=True)
       parser.add_argument("--discrepancy_file", required=True)
       parser.add_argument("--scoring_file", required=True)
-      parser.add_argument("-c", required=True)
+      parser.add_argument("--synapse_config", required=True)
       parser.add_argument("--parent_id", required=True)
       args = parser.parse_args()
 
@@ -92,7 +92,7 @@ arguments:
       python3 upload_results_to_synapse.py \
         --discrepancy_file $(inputs.discrepancy_results.path) \
         --scoring_file $(inputs.scoring_results.path) \
-        -c $(inputs.synapse_config.path) \
+        --synapse_config $(inputs.synapse_config.path) \
         --parent_id $(inputs.parent_id)
 # arguments:
 #   - valueFrom: upload_results_to_synapse.py

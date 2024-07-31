@@ -169,6 +169,10 @@ steps:
   upload_to_synapse:
     run: steps/synapse_upload.cwl
     in:
+      - id: discrepancy_results
+        source: "#create_scoring_report/discrepancy_results"
+      - id: scoring_results
+        source: "#create_scoring_report/scoring_results"
       - id: synapse_config   # this input is needed so that uploading to Synapse is possible
         source: "#synapseConfig"
       - id: parent_id  # this input is needed so that Synapse knows where to upload file
@@ -176,10 +180,8 @@ steps:
       # removed since this step is no longer happening
       # - id: dciodvfy_results
       #   source: "#create_dciodvfy_report/dciodvfy_results"
-      - id: discrepancy_results
-        source: "#create_scoring_report/discrepancy_results"
-      - id: scoring_results
-        source: "#create_scoring_report/scoring_results"
+      
+      
     out:
       - id: results
   
