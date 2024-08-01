@@ -7,19 +7,19 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - entryname: setup.sh
-        entry: |
+      # - entryname: setup.sh
+      #   entry: |
           #!/bin/bash
-          pip install openpyxl
+          # pip install openpyxl
       - entryname: upload_results_to_synapse.py
         entry: |
           #!/usr/bin/env python
           import synapseclient
           import argparse
           import json
-          import openpyxl
+          # import openpyxl
           import os
-          import pandas as pd
+          # import pandas as pd
 
           parser = argparse.ArgumentParser()
           parser.add_argument("--discrepancy_file", required=True)
@@ -29,10 +29,10 @@ requirements:
           args = parser.parse_args()
 
           # Create a dataframe of the scoring file
-          score_data = pd.read_excel(args.scoring_file)
+          # score_data = pd.read_excel(args.scoring_file)
 
           # Record the score for display in the Synapse View
-          final_score = score_data['Score'][0]
+          # final_score = score_data['Score'][0]
 
           # Begin template Synapse Upload script
           syn = synapseclient.Synapse(configPath=args.synapse_config)
@@ -73,9 +73,9 @@ outputs:
 baseCommand: ["/bin/bash", "-c"]
 arguments:
   - valueFrom: |
-      set -e
-      chmod +x setup.sh
-      ./setup.sh
+      # set -e
+      # chmod +x setup.sh
+      # ./setup.sh
       python3 upload_results_to_synapse.py \
         --discrepancy_file $(inputs.discrepancy_results.path) \
         --scoring_file $(inputs.scoring_results.path) \
