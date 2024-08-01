@@ -17,7 +17,7 @@ requirements:
       import os
       parser = argparse.ArgumentParser()
       parser.add_argument("-s", "--submissionid", required=True, help="Submission ID")
-      #parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
+      parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
       #parser.add_argument("-r", "--discrepancy_file", required=True, help="Discrepancy file")
       parser.add_argument("-r", "--scoring_file", required=True, help="Scoring file")
       parser.add_argument("-p", "--private_annotations", nargs="+", default=[], help="annotations to not be sent via e-mail")
@@ -59,10 +59,10 @@ requirements:
             "\n\n"
           ]
           if csv_full_id:
-            message.append(f"Each scan's individual lesion-wise scores are available here: https://www.synapse.org/#!Synapse:{csv_id}")
-            message.append(f"\nLegacy scores are available here: https://www.synapse.org/#!Synapse:{csv_full_id}")
+            message.append(f"Your scoring report is available here: https://www.synapse.org/#!Synapse:{csv_id}")
+            # message.append(f"\nLegacy scores are available here: https://www.synapse.org/#!Synapse:{csv_full_id}")
           else:
-            message.append(f"Each scan's individual scores are available here: https://www.synapse.org/#!Synapse:{csv_id}")
+            message.append(f"Your report is available here: https://www.synapse.org/#!Synapse:{csv_id}")
           message.append("\n\nSincerely,\nChallenge Administrator")
           syn.sendMessage(
               userIds=[participantid],
