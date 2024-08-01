@@ -51,7 +51,7 @@ requirements:
 
           # Add the final score to the results file for synapse annotation
           # results['score'] = final_score
-          results['score'] = syn.getColumn(5)
+          # results['score'] = syn.getColumn(5)
           with open('results.json', 'w') as out:
               json.dump(results, out)
 
