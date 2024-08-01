@@ -228,18 +228,19 @@ steps:
         source: "#synapseConfig"
     out: [finished]
 
-  send_score_results:
-    doc: >
-      Send email of the scores to the submitter, as well as the link to the
-      files on Synapse
-    run: steps/email_results.cwl
-    in:
-      - id: submissionid
-        source: "#submissionId"
-      - id: synapse_config
-        source: "#synapseConfig"
-      - id: results
-        source: "#upload_to_synapse/results"
+  # send_score_results:
+  #   doc: >
+  #     Send email of the scores to the submitter, as well as the link to the
+  #     files on Synapse
+  #   run: steps/email_results.cwl
+  #   in:
+  #     - id: submissionid
+  #       source: "#submissionId"
+  #     - id: synapse_config
+  #       source: "#synapseConfig"
+  #     - id: results
+  #       source: "#upload_to_synapse/results"
+  #   out: [finished]
       # - id: discrepancy_results
       #   source: "#create_scoring_report/discrepancy_results"
       # - id: scoring_results
@@ -249,7 +250,7 @@ steps:
       # OPTIONAL: add annotations to be withheld from participants to `[]`
       # - id: private_annotations
       #   default: []
-    out: [finished]
+    
   
   #remove writeup file check and subsequent email re writeup
   # validate:

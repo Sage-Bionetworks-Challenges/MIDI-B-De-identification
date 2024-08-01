@@ -74,7 +74,7 @@ inputs:
   type: int
 - id: synapse_config
   type: File
-- id: results
+- id: scoring_file
   type: File
 - id: private_annotations
   type: string[]?
