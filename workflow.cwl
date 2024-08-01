@@ -199,6 +199,29 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
     out: [finished]
+
+  send_score_results:
+    doc: >
+      Send email of the scores to the submitter, as well as the link to the
+      files on Synapse
+    run: /steps/email_results.cwl
+    in:
+      - id: submissionid
+        source: "#submissionId"
+      - id: synapse_config
+        source: "#synapseConfig"
+      - id: results
+        source: "#upload_to_synapse/results"
+      # - id: discrepancy_results
+      #   source: "#create_scoring_report/discrepancy_results"
+      # - id: scoring_results
+      #   source: "#create_scoring_report/scoring_results"
+      - id: parent_id  # this input is needed so that Synapse knows where to upload file
+        source: "#adminUploadSynId"
+      # OPTIONAL: add annotations to be withheld from participants to `[]`
+      # - id: private_annotations
+      #   default: []
+    out: [finished]
   
   #remove writeup file check and subsequent email re writeup
   # validate:

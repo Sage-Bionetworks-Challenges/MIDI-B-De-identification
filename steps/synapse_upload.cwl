@@ -29,10 +29,10 @@ requirements:
           args = parser.parse_args()
 
           # Create a dataframe of the scoring file
-          # score_data = pd.read_excel(args.scoring_file)
+          score_data = pd.read_excel(args.scoring_file)
 
           # Record the score for display in the Synapse View
-          # final_score = score_data['Score'][0]
+          final_score = score_data['Score'][0]
 
           # Begin template Synapse Upload script
           syn = synapseclient.Synapse(configPath=args.synapse_config)
@@ -70,17 +70,29 @@ outputs:
     outputBinding:
       glob: results.json
 
-baseCommand: ["/bin/bash", "-c"]
+baseCommand: python3
 arguments:
-  - valueFrom: |
+  - upload_results_to_synapse.py
+  - valueFrom: --discrepancy_file
+  - valueFrom: $(inputs.discrepancy_results.path)
+  - valueFrom: --scoring_file
+  - valueFrom: $(inputs.scoring_results.path)
+  - valueFrom: --synapse_config
+  - valueFrom: $(inputs.synapse_config.path)
+  - valueFrom: --parent_id
+  - valueFrom: $(inputs.parent_id)
+  
+# baseCommand: ["/bin/bash", "-c"]
+# arguments:
+#   - valueFrom: |
       # set -e
       # chmod +x setup.sh
       # ./setup.sh
-      python3 upload_results_to_synapse.py \
-        --discrepancy_file $(inputs.discrepancy_results.path) \
-        --scoring_file $(inputs.scoring_results.path) \
-        --synapse_config $(inputs.synapse_config.path) \
-        --parent_id $(inputs.parent_id)
+      # python3 upload_results_to_synapse.py \
+      #   --discrepancy_file $(inputs.discrepancy_results.path) \
+      #   --scoring_file $(inputs.scoring_results.path) \
+      #   --synapse_config $(inputs.synapse_config.path) \
+      #   --parent_id $(inputs.parent_id)
 
 hints:
   DockerRequirement:
