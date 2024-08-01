@@ -28,12 +28,6 @@ requirements:
           parser.add_argument("--parent_id", required=True)
           args = parser.parse_args()
 
-          # Create a dataframe of the scoring file
-          # score_data = pd.read_excel(args.scoring_file)
-
-          # Record the score for display in the Synapse View
-          # final_score = score_data['Score'][0]
-
           # Begin template Synapse Upload script
           syn = synapseclient.Synapse(configPath=args.synapse_config)
 
@@ -49,9 +43,6 @@ requirements:
           scoring = syn.store(scoring)
           results['scoring'] = scoring.id
 
-          # Add the final score to the results file for synapse annotation
-          # results['score'] = final_score
-          # results['score'] = syn.getColumn(5)
           with open('results.json', 'w') as out:
               json.dump(results, out)
 
@@ -82,18 +73,6 @@ arguments:
   - valueFrom: $(inputs.synapse_config.path)
   - valueFrom: --parent_id
   - valueFrom: $(inputs.parent_id)
-  
-# baseCommand: ["/bin/bash", "-c"]
-# arguments:
-#   - valueFrom: |
-      # set -e
-      # chmod +x setup.sh
-      # ./setup.sh
-      # python3 upload_results_to_synapse.py \
-      #   --discrepancy_file $(inputs.discrepancy_results.path) \
-      #   --scoring_file $(inputs.scoring_results.path) \
-      #   --synapse_config $(inputs.synapse_config.path) \
-      #   --parent_id $(inputs.parent_id)
 
 hints:
   DockerRequirement:

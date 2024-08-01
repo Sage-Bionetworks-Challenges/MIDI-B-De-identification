@@ -94,7 +94,7 @@ steps:
       - id: scoring_results
       - id: discrepancy_results
       - id: discrepancy_internal
-
+    
   notify_filepath_status:
     doc: Notify participant if submission is not acceptable.
     run: |-
@@ -112,6 +112,17 @@ steps:
         default: true
     out: [finished]
 
+  get_score:
+    doc: Isolate the submission score
+    run: steps/isolate_score.cwl
+    in:
+      - id: scoring_file
+        source: "#create_scoring_report/scoring_results"
+      - id: check_validation_finished 
+        source: "#notify_filepath_status/finished"
+    out:
+      - id: results
+  
   add_status_annots:
     doc: >
       Add 'submission_status' and 'submission_errors' annotations to the
@@ -130,6 +141,23 @@ steps:
         source: "#synapseConfig"
     out: [finished]
 
+  add_score_annot:
+    doc: >
+      Add 'score' annotation to the submission
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/annotate_submission.cwl
+    in:
+      - id: submissionid
+        source: "#submissionId"
+      - id: annotation_values
+        source: "#get_score/results"
+      - id: to_public
+        default: true
+      - id: force
+        default: true
+      - id: synapse_config
+        source: "#synapseConfig"
+    out: [finished]
+  
   check_filepath_status:
     doc: >
       Check the validation status of the submission; if 'INVALID', throw an
