@@ -216,8 +216,8 @@ steps:
       #   source: "#create_scoring_report/discrepancy_results"
       # - id: scoring_results
       #   source: "#create_scoring_report/scoring_results"
-      - id: parent_id  # this input is needed so that Synapse knows where to upload file
-        source: "#adminUploadSynId"
+      # - id: parent_id  # this input is needed so that Synapse knows where to upload file
+      #   source: "#adminUploadSynId"
       # OPTIONAL: add annotations to be withheld from participants to `[]`
       # - id: private_annotations
       #   default: []
