@@ -29,10 +29,10 @@ requirements:
           args = parser.parse_args()
 
           # Create a dataframe of the scoring file
-          score_data = pd.read_excel(args.scoring_file)
+          # score_data = pd.read_excel(args.scoring_file)
 
           # Record the score for display in the Synapse View
-          final_score = score_data['Score'][0]
+          # final_score = score_data['Score'][0]
 
           # Begin template Synapse Upload script
           syn = synapseclient.Synapse(configPath=args.synapse_config)
@@ -50,7 +50,8 @@ requirements:
           results['scoring'] = scoring.id
 
           # Add the final score to the results file for synapse annotation
-          results['score'] = final_score
+          # results['score'] = final_score
+          results['score'] = syn.getColumn(5)
           with open('results.json', 'w') as out:
               json.dump(results, out)
 
