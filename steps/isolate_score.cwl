@@ -21,7 +21,7 @@ outputs:
 
 baseCommand: get_score.py
 arguments:
-  - prefix: -scoring_file
+  - prefix: --scoring_file
     valueFrom: $(inputs.scoring_file.path)
   - prefix: -o
     valueFrom: score_results.json
