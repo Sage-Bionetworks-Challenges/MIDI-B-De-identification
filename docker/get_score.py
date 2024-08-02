@@ -9,8 +9,7 @@ def get_args():
     """Set up command-line interface and get arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--scoring_file", type=str, required=True)
-    # parser.add_argument("--results_file", type=str, required=True)
-    parser.add_argument("-o", "--output", type=str)
+    parser.add_argument("--results_file", type=str, required=True)
     return parser.parse_args()
 
 def get_score(filename):
@@ -23,19 +22,27 @@ def get_score(filename):
 
     return final_score
 
+def update_results_file(results_file, score):
+    """Update the results file with the new score."""
+    try:
+        with open(results_file, "r") as file:
+            results_data = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        results_data = {}
+
+    results_data["Score"] = score
+    
+    with open(results_file, "w") as file:
+        json.dump(results_data, file, indent=4)
+
 def main():
     """Main function."""
     args = get_args()
     score = get_score(args.scoring_file)
-    if args.output:
-        with open(args.output, "w") as out:
-            res = {
-                "submission_status": "SCORED",
-                "score": score  # Store the score value directly
-            }
-            out.write(json.dumps(res))
-    else:
-        print(score)
+    
+    # Update the results file with the score
+    update_results_file(args.results_file, score)
+    
 
 if __name__ == "__main__":
     main()

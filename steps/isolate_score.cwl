@@ -10,6 +10,9 @@ inputs:
   scoring_file:
     type: File
   
+  results_file:
+    type: File
+  
   check_validation_finished:
     type: boolean?
 

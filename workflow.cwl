@@ -118,32 +118,34 @@ steps:
     in:
       - id: scoring_file
         source: "#create_scoring_report/scoring_results"
+      - id: results_file
+        source: "#create_scoring_report/results"
       - id: check_validation_finished 
         source: "#notify_filepath_status/finished"
     out:
       - id: results
   
-  add_status_annots:
-    doc: >
-      Add 'submission_status' and 'submission_errors' annotations to the
-      submission
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/annotate_submission.cwl
-    in:
-      - id: submissionid
-        source: "#submissionId"
-      - id: annotation_values
-        source: "#create_scoring_report/results"
-      - id: to_public
-        default: true
-      - id: force
-        default: true
-      - id: synapse_config
-        source: "#synapseConfig"
-    out: [finished]
+  # add_status_annots:
+  #   doc: >
+  #     Add 'submission_status' and 'submission_errors' annotations to the
+  #     submission
+  #   run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/annotate_submission.cwl
+  #   in:
+  #     - id: submissionid
+  #       source: "#submissionId"
+  #     - id: annotation_values
+  #       source: "#get_score/results"
+  #     - id: to_public
+  #       default: true
+  #     - id: force
+  #       default: true
+  #     - id: synapse_config
+  #       source: "#synapseConfig"
+  #   out: [finished]
 
-  add_score_annot:
+  add_annot:
     doc: >
-      Add 'score' annotation to the submission
+      Add 'score', 'status, and 'submission errors' annotation to the submission
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/annotate_submission.cwl
     in:
       - id: submissionid
@@ -219,21 +221,6 @@ steps:
       - id: submissionid
         source: "#submissionId"
       - id: annotation_values
-        source: "#upload_to_synapse/results"
-      - id: to_public
-        default: true
-      - id: force
-        default: true
-      - id: synapse_config
-        source: "#synapseConfig"
-    out: [finished]
-
-  annotate_full_evaluation_with_score:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/annotate_submission.cwl
-    in:
-      - id: submissionid
-        source: "#submissionId"
-      - id: annotation_values
         source: "#get_score/results"
       - id: to_public
         default: true
@@ -242,6 +229,21 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
     out: [finished]
+
+  # annotate_full_evaluation_with_score:
+  #   run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/annotate_submission.cwl
+  #   in:
+  #     - id: submissionid
+  #       source: "#submissionId"
+  #     - id: annotation_values
+  #       source: "#get_score/results"
+  #     - id: to_public
+  #       default: true
+  #     - id: force
+  #       default: true
+  #     - id: synapse_config
+  #       source: "#synapseConfig"
+  #   out: [finished]
 
   # send_score_results:
   #   doc: >
