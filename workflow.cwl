@@ -228,6 +228,21 @@ steps:
         source: "#synapseConfig"
     out: [finished]
 
+  annotate_full_evaluation_with_score:
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/annotate_submission.cwl
+    in:
+      - id: submissionid
+        source: "#submissionId"
+      - id: annotation_values
+        source: "#get_score/results"
+      - id: to_public
+        default: true
+      - id: force
+        default: true
+      - id: synapse_config
+        source: "#synapseConfig"
+    out: [finished]
+
   # send_score_results:
   #   doc: >
   #     Send email of the scores to the submitter, as well as the link to the
