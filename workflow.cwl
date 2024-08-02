@@ -143,7 +143,7 @@ steps:
   #       source: "#synapseConfig"
   #   out: [finished]
 
-  add_annot:
+  add_status_annots:
     doc: >
       Add 'score', 'status, and 'submission errors' annotation to the submission
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/annotate_submission.cwl
