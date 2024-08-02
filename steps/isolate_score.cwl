@@ -17,14 +17,14 @@ outputs:
   results:
     type: File
     outputBinding:
-      glob: scored_results.json
+      glob: results.json
 
 baseCommand: get_score.py
 arguments:
   - prefix: --scoring_file
     valueFrom: $(inputs.scoring_file.path)
   - prefix: -o
-    valueFrom: scored_results.json
+    valueFrom: results.json
 
 hints:
   DockerRequirement:
