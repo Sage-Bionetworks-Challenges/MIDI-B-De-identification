@@ -8,7 +8,8 @@ import pandas as pd
 def get_args():
     """Set up command-line interface and get arguments."""
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--scoring_file", type=str, required=True)
+    parser.add_argument("--scoring_file", type=str, required=True)
+    # parser.add_argument("--results_file", type=str, required=True)
     parser.add_argument("-o", "--output", type=str)
     return parser.parse_args()
 
