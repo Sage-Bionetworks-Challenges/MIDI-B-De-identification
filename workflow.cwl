@@ -151,7 +151,7 @@ steps:
       - id: submissionid
         source: "#submissionId"
       - id: annotation_values
-        source: "#get_score/results"
+        source: "#create_scoring_report/results"
       - id: to_public
         default: true
       - id: force
@@ -173,20 +173,6 @@ steps:
       - id: previous_email_finished
         source: "#notify_filepath_status/finished"
     out: [finished]
-    
-
-  # create_discrepancy_report:
-  #   run: steps/discrepancy.cwl
-  #   in:
-  #     - id: compressed_file
-  #       source: "#download_submission/filepath"
-  #     - id: database_created
-  #       source: "#create_scoring_report/database_created"
-  #   out:
-  #     - id: discrepancy_results
-  #     - id: discrepancy_internal
-  #     - id: scoring_results
-
 
   # create_dciodvfy_report:
   #   run: steps/dicovdfy.cwl
