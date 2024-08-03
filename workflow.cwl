@@ -207,7 +207,7 @@ steps:
       - id: submissionid
         source: "#submissionId"
       - id: annotation_values
-        source: "#get_score/results"
+        source: "#create_scoring_report/results"
       - id: to_public
         default: true
       - id: force
