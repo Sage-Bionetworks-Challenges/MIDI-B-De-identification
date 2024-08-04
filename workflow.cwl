@@ -187,6 +187,8 @@ steps:
         source: "#create_scoring_report/discrepancy_results"
       - id: scoring_results
         source: "#create_scoring_report/scoring_results"
+      - id: score_value
+        source: "#get_score/results"
       - id: synapse_config   # this input is needed so that uploading to Synapse is possible
         source: "#synapseConfig"
       - id: parent_id  # this input is needed so that Synapse knows where to upload file
