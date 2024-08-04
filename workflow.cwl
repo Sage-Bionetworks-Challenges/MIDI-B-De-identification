@@ -125,22 +125,6 @@ steps:
     out:
       - id: results
   
-  email_score:
-    doc: Send email of scores to submitter
-    run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/score_email.cwl
-    in:
-      - id: submissionid
-        source: "#submissionId"
-      - id: synapse_config
-        source: "#synapseConfig"
-      - id: results
-        source: "#get_score/results"
-      # OPTIONAL: add annotations to be withheld from participants to `[]`
-      # - id: private_annotations
-      #   default: []
-    out: []
-  
   add_score_annots:
     doc: >
       Add 'submission_status' and 'submission_errors' annotations to the
