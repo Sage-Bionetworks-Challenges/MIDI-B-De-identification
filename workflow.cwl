@@ -94,7 +94,7 @@ steps:
       - id: scoring_results
       - id: discrepancy_results
       - id: discrepancy_internal
-    
+  
   notify_filepath_status:
     doc: Notify participant if submission is not acceptable.
     run: |-
@@ -181,6 +181,8 @@ steps:
         source: "#create_scoring_report/scoring_results"
       - id: score_value
         source: "#get_score/results"
+      - id: compressed_file
+        source: "#download_submission/filepath"
       - id: synapse_config   # this input is needed so that uploading to Synapse is possible
         source: "#synapseConfig"
       - id: parent_id  # this input is needed so that Synapse knows where to upload file

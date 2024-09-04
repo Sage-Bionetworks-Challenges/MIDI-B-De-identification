@@ -23,6 +23,7 @@ requirements:
           parser.add_argument("--discrepancy_file", required=True)
           parser.add_argument("--scoring_file", required=True)
           parser.add_argument("--score_value", required=True)
+          parser.add_argument("--compressed_file", required=True)
           parser.add_argument("--synapse_config", required=True)
           parser.add_argument("--parent_id", required=True)
           args = parser.parse_args()
@@ -63,6 +64,10 @@ requirements:
           score = syn.store(scoring)
           results['score'] = data
 
+          # Add submitted file to synapse
+          submitted_file = synapseclient.File(args.compressed_file, parent=args.parent_id)
+          submitted_file = syn.store(submitted_file)
+
           with open('results.json', 'w') as out:
               json.dump(results, out)
 
@@ -73,6 +78,8 @@ inputs:
     type: File
   - id: score_value
     type: File
+  - id: compressed_file
+    type: File  
   - id: parent_id
     type: string
   - id: synapse_config
@@ -93,6 +100,8 @@ arguments:
   - valueFrom: $(inputs.scoring_results.path)
   - valueFrom: --score_value
   - valueFrom: $(inputs.score_value.path)
+  - valueFrom: --compressed_file
+  - valueFrom: $(inputs.compressed_file.path)
   - valueFrom: --synapse_config
   - valueFrom: $(inputs.synapse_config.path)
   - valueFrom: --parent_id
