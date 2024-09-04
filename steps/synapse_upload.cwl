@@ -67,6 +67,7 @@ requirements:
           # Add submitted file to synapse
           submitted_file = synapseclient.File(args.compressed_file, parent=args.parent_id)
           submitted_file = syn.store(submitted_file)
+          results['submitted_file'] = submitted_file.id
 
           with open('results.json', 'w') as out:
               json.dump(results, out)
