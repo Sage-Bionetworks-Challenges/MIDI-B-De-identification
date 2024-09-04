@@ -66,6 +66,7 @@ outputs:
 baseCommand: ["/bin/bash", "-c"]
 arguments:
   - |
+    cp -r /usr/local/bin/MIDI_validation_script . && \ # copy inputs to the working dir
     python /usr/local/bin/MIDI_validation_script/run_validation.py $(inputs.compressed_file.path) && \
     python /usr/local/bin/MIDI_validation_script/run_reports.py $(inputs.compressed_file.path) # && \
     # mkdir dciodvfy && \
