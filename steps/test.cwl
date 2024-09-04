@@ -48,17 +48,17 @@ outputs:
   scoring_results:
     type: File
     outputBinding:
-      glob: 'results/MIDI_1_1_Testing/scoring_report_series.xlsx'
+      glob: 'results/MIDI_1_1_Testing_Phase/scoring_report_series.xlsx'
 
   discrepancy_results:
     type: File
     outputBinding:
-      glob: 'results/MIDI_1_1_Testing/discrepancy_report_participant.csv'
+      glob: 'results/MIDI_1_1_Testing_Phase/discrepancy_report_participant.csv'
   
   discrepancy_internal:
     type: File
     outputBinding:
-      glob: 'results/MIDI_1_1_Testing/discrepancy_report_internal.csv'
+      glob: 'results/MIDI_1_1_Testing_Phase/discrepancy_report_internal.csv'
 
   
 
