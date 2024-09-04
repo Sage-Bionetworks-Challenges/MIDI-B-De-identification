@@ -73,4 +73,4 @@ arguments:
 
 hints:
   DockerRequirement:
-    dockerPull: docker.synapse.org/syn53065762/validate_score:v12
+    dockerPull: docker.synapse.org/syn53065762/create_reports:v1.0.0
