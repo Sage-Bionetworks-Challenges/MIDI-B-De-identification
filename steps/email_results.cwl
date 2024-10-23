@@ -52,17 +52,22 @@ requirements:
           if csv_full_id:
             del annots['scoring']
           subject = f"Submission to '{evaluation.name}' scored!"
+          # message = [
+          #  f"Hello {name},\n\n",
+          #  f"Your submission (id: {sub.id}) has been scored and below are the metric averages:\n\n",
+          #  "\n".join([i + " : " + str(annots[i]) for i in annots]),
+          #  "\n\n"
+          # ]
           message = [
             f"Hello {name},\n\n",
-            f"Your submission (id: {sub.id}) has been scored and below are the metric averages:\n\n",
-            "\n".join([i + " : " + str(annots[i]) for i in annots]),
+            f"Your submission (id: {sub.id}) has been scored, and the results will be posted here: https://www.synapse.org/Synapse:syn53065760/wiki/629528."
             "\n\n"
           ]
-          if csv_full_id:
-            message.append(f"Your scoring report is available here: https://www.synapse.org/#!Synapse:{csv_id}")
+          # if csv_full_id:
+            # message.append(f"Your scoring report is available here: https://www.synapse.org/#!Synapse:{csv_id}")
             # message.append(f"\nLegacy scores are available here: https://www.synapse.org/#!Synapse:{csv_full_id}")
-          else:
-            message.append(f"Your report is available here: https://www.synapse.org/#!Synapse:{csv_id}")
+          # else:
+            # message.append(f"Your report is available here: https://www.synapse.org/#!Synapse:{csv_id}")
           message.append("\n\nSincerely,\nChallenge Administrator")
           syn.sendMessage(
               userIds=[participantid],

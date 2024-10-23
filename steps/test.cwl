@@ -19,12 +19,12 @@ outputs:
   pixel_results:
     type: File
     outputBinding:
-      glob: 'results/MIDI_1_1_Testing/pixel_validation.xlsx'
+      glob: 'results/MIDI_1_1_Testing_Phase/pixel_validation.xlsx'
 
   database_created:
     type: File
     outputBinding:
-      glob: 'results/MIDI_1_1_Testing/validation_results.db'
+      glob: 'results/MIDI_1_1_Testing_Phase/validation_results.db'
 
   results:
     type: File
@@ -48,17 +48,17 @@ outputs:
   scoring_results:
     type: File
     outputBinding:
-      glob: 'results/MIDI_1_1_Testing/scoring_report_series.xlsx'
+      glob: 'results/MIDI_1_1_Testing_Phase/scoring_report_series.xlsx'
 
   discrepancy_results:
     type: File
     outputBinding:
-      glob: 'results/MIDI_1_1_Testing/discrepancy_report_participant.csv'
+      glob: 'results/MIDI_1_1_Testing_Phase/discrepancy_report_participant.csv'
   
   discrepancy_internal:
     type: File
     outputBinding:
-      glob: 'results/MIDI_1_1_Testing/discrepancy_report_internal.csv'
+      glob: 'results/MIDI_1_1_Testing_Phase/discrepancy_report_internal.csv'
 
   
 
@@ -66,6 +66,7 @@ outputs:
 baseCommand: ["/bin/bash", "-c"]
 arguments:
   - |
+    cp -r /usr/local/bin/MIDI_validation_script . && \ # copy inputs to the working dir
     python /usr/local/bin/MIDI_validation_script/run_validation.py $(inputs.compressed_file.path) && \
     python /usr/local/bin/MIDI_validation_script/run_reports.py $(inputs.compressed_file.path) # && \
     # mkdir dciodvfy && \
@@ -73,4 +74,4 @@ arguments:
 
 hints:
   DockerRequirement:
-    dockerPull: docker.synapse.org/syn53065762/validate_score:v12
+    dockerPull: docker.synapse.org/syn53065762/create_reports:v1.0.0
