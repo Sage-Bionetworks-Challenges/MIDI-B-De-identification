@@ -80,4 +80,4 @@ arguments:
 
 hints:
   DockerRequirement:
-    dockerPull: docker.synapse.org/syn53065762/validate_cnt_bench:v1
+    dockerPull: docker.synapse.org/syn53065762/test_cnt_bench:v1
