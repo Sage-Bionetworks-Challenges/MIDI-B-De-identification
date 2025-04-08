@@ -176,7 +176,7 @@ steps:
       - id: synapse_config   # this input is needed so that uploading to Synapse is possible
         source: "#synapseConfig"
       - id: parent_id  # this input is needed so that Synapse knows where to upload file
-        source: "#adminUploadSynId"
+        source: "#submitterUploadSynId"
       - id: dciodvfy_results
         source: "#create_scoring_report/dciodvfy_results"
     out:
